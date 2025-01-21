@@ -1,0 +1,23 @@
+name: Deploy index.html
+
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v4
+
+        - name: copy file via ssh password
+          uses: appleboy/scp-action@v0.1.7
+          with:
+            host: 104.155.135.119
+            username: ogre
+            key: ${{ secrets.SSH_KEY }}
+            source: index.html
+            target: /home/blef
